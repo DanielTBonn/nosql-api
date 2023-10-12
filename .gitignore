@@ -1,0 +1,10 @@
+node_modules/
+.DS_Store
+.vscode
+*.xslx
+
+# vscode specific files
+*.code-workspace
+
+# Local Netlify folder
+.netlify
