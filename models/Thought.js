@@ -36,6 +36,7 @@ const thoughtSchema = new mongoose.Schema(
         createdAt: {
             type: Date,
             default: Date.now,
+            get: reformatDate
 
         },
         username: {
@@ -57,8 +58,24 @@ thoughtSchema.virtual('reactionCount').get(function() {
     return this.reactions.length;
 });
 
+function reformatDate(date) {
+    const formatDate = new Date(date)
+    return formatDate.toLocaleDateString()
+}
+
 const Thought = mongoose.model('thought', thoughtSchema);
 
 const handleError = (err) => console.log(err);
+
+Thought
+    .create(
+        {
+            thoughtText: "Hello World!",
+            username: "Daniel T Bonn",
+            reactions: []
+        }
+    )
+    .then(result => console.log('Created a new document', result))
+    .catch(err => handleError(err));
 
 module.exports = Thought;
