@@ -3,7 +3,7 @@ const { ObjectId } = require('mongodb')
 
 const reactionSchema = new mongoose.Schema({
   reactionId: {
-    type: ObjectId,
+    type: mongoose.Schema.Types.ObjectId,
     default: new ObjectId(),
   },
   reactionText: {
@@ -31,7 +31,7 @@ const thoughtSchema = new mongoose.Schema({
   createdAt: {
     type: Date,
     default: Date.now,
-    
+
   },
   username: {
     type: String,
@@ -58,7 +58,7 @@ const userSchema = new mongoose.Schema({
         },
     },
     thoughts: [thoughtSchema],
-    friends: [userSchema],
+    // friends: [userSchema],
     lastAccessed: { type: Date, default: Date.now },
   });
 
@@ -70,7 +70,7 @@ User
   .create({
     username: "Daniel Bonn",
     email: "danieltbonn@gmail.com",
-    thoughts: [],
+    thoughts: [{thoughtText: "Hello World", username: "Dick Butkus"}],
     friends: [],
   })
   .then(result => console.log('Created a new document', result))
