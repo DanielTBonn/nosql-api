@@ -8,11 +8,13 @@ const userSchema = new mongoose.Schema({
     username: { 
         type: String,
         required: true, 
+        unique: true,
         trim: true,
     },
     email: { 
         type: String, 
         required: true,
+        unique: true,
         validate: {
           validator: function (value) {
             return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(value);
@@ -33,27 +35,38 @@ const userSchema = new mongoose.Schema({
       }
     ],
     lastAccessed: { type: Date, default: Date.now },
-  });
+  },
+  {
+    toJson: {
+      virtuals: true
+    },
+    id: false
+  }
+);
+
+userSchema.virtual('friendCount').get(function() {
+  return this.friends.length;
+});
 
 const User = mongoose.model('user', userSchema);
 
 const handleError = (err) => console.log(err);
 
-// User
-//   .create({
-//     username: "lernantino",
-//     email: "lernantino@gmail.com",
-//     thoughts: [],
-//     friends: [],
-//   },
-//   {
-//     username: "a name",
-//     email: "lernantino@gmail.com",
-//     thoughts: [],
-//     friends: [],
-//   })
-//   .then(result => console.log('Created a new document', result))
-//   .catch(err => handleError(err));
+User
+  .create({
+    username: "lernantino",
+    email: "lernantino@gmail.com",
+    thoughts: [],
+    friends: [],
+  },
+  {
+    username: "a name",
+    email: "aname@gmail.com",
+    thoughts: [],
+    friends: [],
+  })
+  .then(result => console.log('Created a new document', result))
+  .catch(err => handleError(err));
 
 
 module.exports = User;
