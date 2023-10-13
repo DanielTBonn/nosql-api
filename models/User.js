@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
     username: { 
         type: String,
         required: true, 
+        trim: true,
     },
     email: { 
         type: String, 
@@ -38,15 +39,21 @@ const User = mongoose.model('user', userSchema);
 
 const handleError = (err) => console.log(err);
 
-User
-  .create({
-    username: "lernantino",
-    email: "lernantino@gmail.com",
-    thoughts: [],
-    friends: [],
-  })
-  .then(result => console.log('Created a new document', result))
-  .catch(err => handleError(err));
+// User
+//   .create({
+//     username: "lernantino",
+//     email: "lernantino@gmail.com",
+//     thoughts: [],
+//     friends: [],
+//   },
+//   {
+//     username: "a name",
+//     email: "lernantino@gmail.com",
+//     thoughts: [],
+//     friends: [],
+//   })
+//   .then(result => console.log('Created a new document', result))
+//   .catch(err => handleError(err));
 
 
 module.exports = User;
