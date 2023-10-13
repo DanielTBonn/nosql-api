@@ -36,7 +36,7 @@ const thoughtSchema = new mongoose.Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            get: reformatDate
+            // get: reformatDate
 
         },
         username: {
@@ -58,10 +58,14 @@ thoughtSchema.virtual('reactionCount').get(function() {
     return this.reactions.length;
 });
 
-function reformatDate(date) {
-    const formatDate = new Date(date)
-    return formatDate.toLocaleDateString()
-}
+// function reformatDate(date) {
+//     const formatDate = new Date(date)
+//     return formatDate.toLocaleDateString()
+// }
+
+thoughtSchema.virtual("reformatCreatedAt").get(function() {
+    return this.createdAt.toLocaleDateString();
+})
 
 const Thought = mongoose.model('thought', thoughtSchema);
 
