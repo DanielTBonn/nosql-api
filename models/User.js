@@ -1,5 +1,24 @@
 const mongoose = require('mongoose');
 
+
+
+const thoughtSchema = new mongoose.Schema({
+  thoughtText: {
+    type: String,
+    required: true,
+  },
+  createdAt: {
+    type: Date,
+    default: Date.now,
+  },
+  username: {
+    type: String,
+    required: true,
+  },
+  reactions: [reactionSchema]
+
+});
+
 const userSchema = new mongoose.Schema({
     username: { 
         type: String,
@@ -8,10 +27,16 @@ const userSchema = new mongoose.Schema({
     },
     email: { 
         type: String, 
-        required: true 
+        required: true,
+        validate: {
+          validator: function (value) {
+            return /^([a-z0-9_\.-]+)@([\da-z\.-]+)\.([a-z\.]{2,6})$/.test(value);
+          },
+          message: 'Invalid Email Address',
+        },
     },
-    thoughts: Array,
-    friends: Array,
+    thoughts: [thoughtSchema],
+    friends: [userSchema],
     lastAccessed: { type: Date, default: Date.now },
   });
 
