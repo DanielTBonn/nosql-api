@@ -1,4 +1,5 @@
 const { Schema, Types } = require('mongoose');
+const { reformatDate } = require('../utils/helpers');
 
 // schema for the reactions to thoughts
 const reactionSchema = new Schema(
@@ -29,13 +30,12 @@ const reactionSchema = new Schema(
         },
         id: false
     }
-
 );
 
 // added a getter method to display the date a cleaner format
-function reformatDate(date) {
-    const formatDate = new Date(date)
-    return formatDate.toLocaleDateString()
-}
+// function reformatDate(date) {
+//     const formatDate = new Date(date)
+//     return formatDate.toLocaleDateString()
+// }
 
 module.exports = reactionSchema;

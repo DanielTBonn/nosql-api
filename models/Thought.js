@@ -1,5 +1,6 @@
 const mongoose = require('mongoose');
 const Reaction = require('./Reaction');
+const { reformatDate } = require('../utils/helpers');
 
 // schema for the user's thoughts
 const thoughtSchema = new mongoose.Schema(
@@ -38,13 +39,12 @@ thoughtSchema.virtual('reactionCount')
     })
     .set(function(count) {
         this.set({ count })
-    });
+});
 
-// added a getter method to display the date a cleaner format
-function reformatDate(date) {
-    const formatDate = new Date(date)
-    return formatDate.toLocaleDateString()
-}
+// function reformatDate(date) {
+//     const formatDate = new Date(date)
+//     return formatDate.toLocaleDateString()
+// }
 
 // create the thought collection model for our db
 const Thought = mongoose.model('thought', thoughtSchema);
