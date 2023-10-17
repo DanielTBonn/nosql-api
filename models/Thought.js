@@ -47,25 +47,33 @@ const thoughtSchema = new mongoose.Schema(
 
     },
     {
-        toJson: {
-            virtuals: true
+        toJSON: {
+            virtuals: true,
         },
         id: false
     }
 );
 
-thoughtSchema.virtual('reactionCount').get(function() {
-    return this.reactions.length;
-});
+thoughtSchema.virtual('reactionCount')
+    .get(function() {
+    return `${this.reactions.length}`;
+    })
+    .set(function(count) {
+        this.set({ count })
+    });
 
 // function reformatDate(date) {
 //     const formatDate = new Date(date)
 //     return formatDate.toLocaleDateString()
 // }
 
-thoughtSchema.virtual("reformatCreatedAt").get(function() {
-    return this.createdAt.toLocaleDateString();
-})
+thoughtSchema.virtual("reCreatedAt")
+    .get(function() {
+        return `${this.createdAt.toLocaleDateString()}`;
+    })
+    .set(function(newDate) {
+        this.set({ newDate })
+});
 
 const Thought = mongoose.model('thought', thoughtSchema);
 
@@ -81,5 +89,12 @@ Thought
     )
     .then(result => console.log('Created a new document', result))
     .catch(err => handleError(err));
+
+const newThought = new Thought({
+    thoughtText: `Daniel`,
+    username: `Bonn`,
+    });
+
+console.log(`THIS IS A NEW THOUGHT\n\n\n`, newThought.reCreatedAt)
 
 module.exports = Thought;

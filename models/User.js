@@ -37,15 +37,19 @@ const userSchema = new mongoose.Schema({
     lastAccessed: { type: Date, default: Date.now },
   },
   {
-    toJson: {
+    toJSON: {
       virtuals: true
     },
     id: false
   }
 );
 
-userSchema.virtual('friendCount').get(function() {
-  return this.friends.length;
+userSchema.virtual('friendCount')
+  .get(function() {
+    return `${this.friends.length}`;
+  })
+  .set(function(count) {
+    this.set({ count })
 });
 
 const User = mongoose.model('user', userSchema);
@@ -53,18 +57,26 @@ const User = mongoose.model('user', userSchema);
 const handleError = (err) => console.log(err);
 
 User
-  .create({
-    username: "lernantino",
-    email: "lernantino@gmail.com",
-    thoughts: [],
-    friends: [],
-  },
-  {
-    username: "a name",
-    email: "aname@gmail.com",
-    thoughts: [],
-    friends: [],
-  })
+  .create(
+  // {
+  //   username: "lernantino",
+  //   email: "lernantino@gmail.com",
+  //   thoughts: [],
+  //   friends: [],
+  // },
+  // {
+  //   username: "a name",
+  //   email: "aname@gmail.com",
+  //   thoughts: [],
+  //   friends: [],
+  // },
+  // {
+  //   username: "    b name",
+  //   email: "bname@gmail.com",
+  //   thoughts: [],
+  //   friends: [],
+  // }
+  )
   .then(result => console.log('Created a new document', result))
   .catch(err => handleError(err));
 
