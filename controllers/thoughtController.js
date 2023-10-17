@@ -15,11 +15,11 @@ async getThoughts(req, res) {
 // Get one thought
 async getSingleThought(req, res) {
     try {
-        const thought = await Thought.find({ _id: req.params.userId })
+        const thought = await Thought.find({ _id: req.params.thoughtId })
         .select('-__v');
 
         if(!thought) {
-            return res.stats(404).json({message: 'No user with that ID'})
+            return res.stats(404).json({message: 'No thought with that ID'})
         }
 
         res.json(thought);
@@ -51,7 +51,7 @@ async updateThought (req, res) {
             );
 
             if(!thought) {
-                return res.stats(404).json({message: 'No user with that ID'})
+                return res.stats(404).json({message: 'No thought with that ID'})
             }
 
             res.json(thought);
