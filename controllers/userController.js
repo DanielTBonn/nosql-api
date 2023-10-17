@@ -19,7 +19,7 @@ module.exports = {
             .select('-__v');
 
             if(!user) {
-                return res.stats(404).json({message: 'No user with that ID'})
+                return res.status(404).json({message: 'No user with that ID'})
             }
 
             res.json(user);
@@ -50,7 +50,7 @@ module.exports = {
                 );
 
                 if(!user) {
-                    return res.stats(404).json({message: 'No user with that ID'})
+                    return res.status(404).json({message: 'No user with that ID'})
                 }
 
                 res.json(user);
@@ -66,7 +66,7 @@ module.exports = {
             const user = await User.findOneAndDelete({ _id: req.params.userId });
 
             if(!user) {
-                return res.stats(404).json({message: 'No user with that ID'})
+                return res.status(404).json({message: 'No user with that ID'})
             }
 
             res.json({message: "User and associated thoughts have been deleted!"});
@@ -76,6 +76,44 @@ module.exports = {
             console.log(err);
         }
     },
+    // update a user's friends
+    async addFriend (req, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $addToSet: { friends: {_id: req.params.friendId}}},
+                { runValidators: true, new: true },
+                );
 
+                if(!user) {
+                    return res.status(404).json({message: 'No user with that ID'})
+                }
 
+                res.json(user);
+            } catch (err) {
+                res.status(500).json(err)
+                console.log("Error occured");
+                console.log(err);
+            }
+    },
+    // delete a friend from a user
+    async deleteFriend (req, res) {
+        try {
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $pull: { friends: req.params.friendId }},
+                { runValidators: true, new: true },
+                );
+
+                if(!user) {
+                    return res.status(404).json({message: 'No user with that ID'})
+                }
+
+                res.json(user);
+            } catch (err) {
+                res.status(500).json(err)
+                console.log("Error occured");
+                console.log(err);
+            }
+    },
 };

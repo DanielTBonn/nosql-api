@@ -97,6 +97,7 @@ async addReaction(req, res) {
         console.log(err);
     }
 },
+// delete reaction from thought
 async deleteReaction(req, res) {
     try {
         const thought = await Thought.findOneAndUpdate(
@@ -110,7 +111,6 @@ async deleteReaction(req, res) {
         };
 
         res.json(thought);
-
     } catch (err) {
         res.status(500).json(err)
         console.log("Error occured");
