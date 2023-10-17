@@ -15,14 +15,14 @@ module.exports = {
     // Get one user
     async getSingleUser(req, res) {
         try {
-            const users = await User.find({ _id: req.params.userId })
+            const user = await User.find({ _id: req.params.userId })
             .select('-__v');
 
             if(!user) {
                 return res.stats(404).json({message: 'No user with that ID'})
             }
 
-            res.json(users);
+            res.json(user);
         } catch (err) {
             res.status(500).json(err)
             console.log("Error occured");
@@ -32,14 +32,35 @@ module.exports = {
     // create a new user
     async createUser(req, res) {
         try {
-            const users = await User.create(req.body);
-            res.json(users);
+            const user = await User.create(req.body);
+            res.json(user);
         } catch (err) {
             res.status(500).json(err)
             console.log("Error occured");
             console.log(err);
         }
     },    
+    // update a user
+    async updateUser (req, res) {
+        try {
+
+            const user = await User.findOneAndUpdate(
+                { _id: req.params.userId },
+                { $set: req.body },
+                { runValidators: true, new: true },
+                );
+
+                if(!user) {
+                    return res.stats(404).json({message: 'No user with that ID'})
+                }
+                
+                res.json(user);
+            } catch (err) {
+                res.status(500).json(err)
+                console.log("Error occured");
+                console.log(err);
+            }
+    },
     // delete a user
     async deleteUser(req, res) {
         try {

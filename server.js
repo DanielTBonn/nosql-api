@@ -19,24 +19,24 @@ db.once('open', () => {
 });
 
 
-app.get('/get-users', async (req, res) => {
-  try {
-    const result = await User.find({});
-    res.status(200).json(result);
-  } catch (err) {
-    console.log('Uh Oh, something went wrong');
-    res.status(500).json({ message: 'something went wrong' });
-  }
+// app.get('/get-users', async (req, res) => {
+//   try {
+//     const result = await User.find({});
+//     res.status(200).json(result);
+//   } catch (err) {
+//     console.log('Uh Oh, something went wrong');
+//     res.status(500).json({ message: 'something went wrong' });
+//   }
 
-});
+// });
 
-app.get('/get-thoughts', async (req, res) => {
-  try {
-    const result = await Thought.find({});
-    res.status(200).json(result);
-  } catch (err) {
-    console.log('Uh Oh, something went wrong');
-    res.status(500).json({ message: 'something went wrong' });
-  }
+// app.get('/get-thoughts', async (req, res) => {
+//   try {
+//     const result = await Thought.find({});
+//     res.status(200).json(result);
+//   } catch (err) {
+//     console.log('Uh Oh, something went wrong');
+//     res.status(500).json({ message: 'something went wrong' });
+//   }
 
-})
+// })
