@@ -1,30 +1,31 @@
 const mongoose = require('mongoose');
 
-
+// schema for the reactions to thoughts
 const reactionSchema = new mongoose.Schema(
     {
         reactionId: {
-        type: mongoose.Schema.Types.ObjectId,
-        default: () => new mongoose.Schema.Types.ObjectId(),
+            type: mongoose.Schema.Types.ObjectId,
+            default: () => new mongoose.Schema.Types.ObjectId(),
         },
         reactionBody: {
-        type: String,
-        required: true,
-        maxLength: 280,
+            type: String,
+            required: true,
+            maxLength: 280,
         },
         username: {
-        type: String,
-        required: true,
+            type: String,
+            required: true,
         },
         createdAt: {
-        type: Date,
-        default: Date.now,
+            type: Date,
+            default: Date.now,
     
         },
     },
 
 );
 
+// schema for the user's thoughts
 const thoughtSchema = new mongoose.Schema(
     {
         thoughtText: {
@@ -54,6 +55,7 @@ const thoughtSchema = new mongoose.Schema(
     }
 );
 
+// added a virtual counting the number of reactions a thought has 
 thoughtSchema.virtual('reactionCount')
     .get(function() {
     return `${this.reactions.length}`;
@@ -67,6 +69,7 @@ thoughtSchema.virtual('reactionCount')
 //     return formatDate.toLocaleDateString()
 // }
 
+// added a virtual to display the date a cleaner format
 thoughtSchema.virtual("reCreatedAt")
     .get(function() {
         return `${this.createdAt.toLocaleDateString()}`;
@@ -75,6 +78,7 @@ thoughtSchema.virtual("reCreatedAt")
         this.set({ newDate })
 });
 
+// create the thought collection model for our db
 const Thought = mongoose.model('thought', thoughtSchema);
 
 const handleError = (err) => console.log(err);

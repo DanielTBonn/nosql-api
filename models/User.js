@@ -1,9 +1,6 @@
 const mongoose = require('mongoose');
-const { ObjectId } = require('mongodb') 
-// const Thought = require('./Thought');
 
-
-
+// schema for storing the user documents of our database
 const userSchema = new mongoose.Schema({
     username: { 
         type: String,
@@ -44,6 +41,7 @@ const userSchema = new mongoose.Schema({
   }
 );
 
+// created a virtual to count the number of friends a user has
 userSchema.virtual('friendCount')
   .get(function() {
     return `${this.friends.length}`;
@@ -52,6 +50,7 @@ userSchema.virtual('friendCount')
     this.set({ count })
 });
 
+// create the user collection model for our db
 const User = mongoose.model('user', userSchema);
 
 const handleError = (err) => console.log(err);
