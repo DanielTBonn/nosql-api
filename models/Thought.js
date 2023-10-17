@@ -19,9 +19,16 @@ const reactionSchema = new mongoose.Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-    
+            get: reformatDate,
         },
     },
+    {
+        toJSON: {
+            virtuals: true,
+            getters: true,
+        },
+        id: false
+    }
 
 );
 
@@ -37,7 +44,7 @@ const thoughtSchema = new mongoose.Schema(
         createdAt: {
             type: Date,
             default: Date.now,
-            // get: reformatDate
+            get: reformatDate,
 
         },
         username: {
@@ -50,6 +57,7 @@ const thoughtSchema = new mongoose.Schema(
     {
         toJSON: {
             virtuals: true,
+            getters: true,
         },
         id: false
     }
@@ -64,19 +72,11 @@ thoughtSchema.virtual('reactionCount')
         this.set({ count })
     });
 
-// function reformatDate(date) {
-//     const formatDate = new Date(date)
-//     return formatDate.toLocaleDateString()
-// }
-
-// added a virtual to display the date a cleaner format
-thoughtSchema.virtual("reCreatedAt")
-    .get(function() {
-        return `${this.createdAt.toLocaleDateString()}`;
-    })
-    .set(function(newDate) {
-        this.set({ newDate })
-});
+// added a getter method to display the date a cleaner format
+function reformatDate(date) {
+    const formatDate = new Date(date)
+    return formatDate.toLocaleDateString()
+}
 
 // create the thought collection model for our db
 const Thought = mongoose.model('thought', thoughtSchema);
@@ -98,7 +98,5 @@ const newThought = new Thought({
     thoughtText: `Daniel`,
     username: `Bonn`,
     });
-
-console.log(`THIS IS A NEW THOUGHT\n\n\n`, newThought.reCreatedAt)
 
 module.exports = Thought;
