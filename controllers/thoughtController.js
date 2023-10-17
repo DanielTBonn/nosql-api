@@ -19,7 +19,7 @@ async getSingleThought(req, res) {
         .select('-__v');
 
         if(!thought) {
-            return res.stats(404).json({message: 'No thought with that ID'})
+            return res.status(404).json({message: 'No thought with that ID'})
         }
 
         res.json(thought);
@@ -51,7 +51,7 @@ async updateThought (req, res) {
             );
 
             if(!thought) {
-                return res.stats(404).json({message: 'No thought with that ID'})
+                return res.status(404).json({message: 'No thought with that ID'})
             }
 
             res.json(thought);
@@ -67,7 +67,7 @@ async deleteThought(req, res) {
         const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
 
         if(!thought) {
-            return res.stats(404).json({message: 'No thought with that ID'})
+            return res.status(404).json({message: 'No thought with that ID'})
         }
 
         res.json({message: "User and associated thoughts have been deleted!"});
@@ -80,6 +80,8 @@ async deleteThought(req, res) {
 // add reaction to thought
 async addReaction(req, res) {
     try {
+
+
         const thought = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
             { $addToSet: { reactions: req.body }},
@@ -87,7 +89,7 @@ async addReaction(req, res) {
         );
 
         if(!thought) {
-            return res.stats(404).json({message: 'No thought with that ID'})
+            return res.status(404).json({message: 'No thought with that ID'})
         };
 
         res.json(thought);

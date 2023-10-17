@@ -17,12 +17,12 @@ router
 
 // update a thought's reactions
 router
-    .route('/:thoughtid/reactions')
-    .put(addReaction);
+    .route('/:thoughtId/reactions')
+    .post(addReaction);
 
 // delete a single reaciton from a thought
 router
-    .route('/:thoughtid/reactions/:reactionId')
+    .route('/:thoughtId/reactions/:reactionId')
     .delete(deleteReaction);
 
 module.exports = router;

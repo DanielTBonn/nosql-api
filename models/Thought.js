@@ -1,36 +1,5 @@
 const mongoose = require('mongoose');
-
-// schema for the reactions to thoughts
-const reactionSchema = new mongoose.Schema(
-    {
-        reactionId: {
-            type: mongoose.Schema.Types.ObjectId,
-            default: () => new mongoose.Schema.Types.ObjectId(),
-        },
-        reactionBody: {
-            type: String,
-            required: true,
-            maxLength: 280,
-        },
-        username: {
-            type: String,
-            required: true,
-        },
-        createdAt: {
-            type: Date,
-            default: Date.now,
-            get: reformatDate,
-        },
-    },
-    {
-        toJSON: {
-            virtuals: true,
-            getters: true,
-        },
-        id: false
-    }
-
-);
+const Reaction = require('./Reaction');
 
 // schema for the user's thoughts
 const thoughtSchema = new mongoose.Schema(
@@ -51,8 +20,7 @@ const thoughtSchema = new mongoose.Schema(
             type: String,
             required: true,
         },
-        reactions: [reactionSchema],
-
+        reactions: [Reaction],
     },
     {
         toJSON: {
@@ -83,20 +51,20 @@ const Thought = mongoose.model('thought', thoughtSchema);
 
 const handleError = (err) => console.log(err);
 
-Thought
-    .create(
-        {
-            thoughtText: "Hello World!",
-            username: "Daniel T Bonn",
-            reactions: []
-        }
-    )
-    .then(result => console.log('Created a new document', result))
-    .catch(err => handleError(err));
+// Thought
+//     .create(
+//         {
+//             thoughtText: "Hello World!",
+//             username: "Daniel T Bonn",
+//             reactions: []
+//         }
+//     )
+//     .then(result => console.log('Created a new document', result))
+//     .catch(err => handleError(err));
 
-const newThought = new Thought({
-    thoughtText: `Daniel`,
-    username: `Bonn`,
-    });
+// const newThought = new Thought({
+//     thoughtText: `Daniel`,
+//     username: `Bonn`,
+//     });
 
 module.exports = Thought;
