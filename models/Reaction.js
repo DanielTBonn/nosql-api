@@ -32,10 +32,5 @@ const reactionSchema = new Schema(
     }
 );
 
-// added a getter method to display the date a cleaner format
-// function reformatDate(date) {
-//     const formatDate = new Date(date)
-//     return formatDate.toLocaleDateString()
-// }
 
 module.exports = reactionSchema;

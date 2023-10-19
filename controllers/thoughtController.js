@@ -116,12 +116,14 @@ async deleteReaction(req, res) {
     try {
         const thought = await Thought.findOneAndUpdate(
             { _id: req.params.thoughtId },
-            { $pull: { reactions: { reactionId: req.params.reactionId } }},
+            { $pull: { reactions: req.params.reactionId  }},
             { runValidators: true, new: true }
         );
-
+        
+        console.log(thought)
+        console.log(req.params.reactionId)
         if(!thought) {
-            return res.stats(404).json({message: 'No thought with that ID'})
+            return res.status(404).json({message: 'No thought with that ID'})
         };
 
         res.json(thought);
