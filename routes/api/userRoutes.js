@@ -19,7 +19,7 @@ router
 // post new friend or delete a friend from a user's friend list
 router
     .route('/:userId/friends/:friendId')
-    .put(addFriend)
+    .post(addFriend)
     .delete(deleteFriend);
 
 module.exports = router;
