@@ -5,7 +5,6 @@ const { getThoughts, getSingleThought, createThought, updateThought, deleteThoug
 router
     .route('/')
     .get(getThoughts)
-    // pushes the created thought's _id to the associated user's thoughts array field
     .post(createThought);
 
 // get, update, or delete a single thought by id

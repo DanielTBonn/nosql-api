@@ -41,30 +41,7 @@ thoughtSchema.virtual('reactionCount')
         this.set({ count })
 });
 
-// function reformatDate(date) {
-//     const formatDate = new Date(date)
-//     return formatDate.toLocaleDateString()
-// }
-
 // create the thought collection model for our db
 const Thought = mongoose.model('thought', thoughtSchema);
-
-const handleError = (err) => console.log(err);
-
-// Thought
-//     .create(
-//         {
-//             thoughtText: "Hello World!",
-//             username: "Daniel T Bonn",
-//             reactions: []
-//         }
-//     )
-//     .then(result => console.log('Created a new document', result))
-//     .catch(err => handleError(err));
-
-// const newThought = new Thought({
-//     thoughtText: `Daniel`,
-//     username: `Bonn`,
-//     });
 
 module.exports = Thought;

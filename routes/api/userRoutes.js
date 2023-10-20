@@ -14,8 +14,6 @@ router
     .put(updateUser)
     .delete(deleteUser);
 
-// `BONUS: Remove a user's associated thoughts when deleted.`
-
 // post new friend or delete a friend from a user's friend list
 router
     .route('/:userId/friends/:friendId')

@@ -63,11 +63,9 @@ async updateThought (req, res) {
             { runValidators: true, new: true },
             );
 
-
             if(!thought) {
                 return res.status(404).json({message: 'No thought with that ID'})
             }
-
 
             res.json(thought);
         } catch (err) {
@@ -76,7 +74,7 @@ async updateThought (req, res) {
             console.log(err);
         }
 },
-// delete a thought
+// delete a thought and update user's thoughts array
 async deleteThought(req, res) {
     try {
         const thought = await Thought.findOneAndDelete({ _id: req.params.thoughtId });
@@ -128,8 +126,6 @@ async deleteReaction(req, res) {
             { runValidators: true, new: true }
         );
         
-        console.log(thought)
-        console.log(req.params.reactionId)
         if(!thought) {
             return res.status(404).json({message: 'No thought with that ID'})
         };
