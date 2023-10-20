@@ -53,31 +53,4 @@ userSchema.virtual('friendCount')
 // create the user collection model for our db
 const User = mongoose.model('user', userSchema);
 
-const handleError = (err) => console.log(err);
-
-User
-  .create(
-  // {
-  //   username: "lernantino",
-  //   email: "lernantino@gmail.com",
-  //   thoughts: [],
-  //   friends: [],
-  // },
-  // {
-  //   username: "a name",
-  //   email: "aname@gmail.com",
-  //   thoughts: [],
-  //   friends: [],
-  // },
-  // {
-  //   username: "    b name",
-  //   email: "bname@gmail.com",
-  //   thoughts: [],
-  //   friends: [],
-  // }
-  )
-  .then(result => console.log('Created a new document', result))
-  .catch(err => handleError(err));
-
-
 module.exports = User;

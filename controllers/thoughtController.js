@@ -63,9 +63,11 @@ async updateThought (req, res) {
             { runValidators: true, new: true },
             );
 
+
             if(!thought) {
                 return res.status(404).json({message: 'No thought with that ID'})
             }
+
 
             res.json(thought);
         } catch (err) {
@@ -83,7 +85,13 @@ async deleteThought(req, res) {
             return res.status(404).json({message: 'No thought with that ID'})
         }
 
-        res.json({message: "User and associated thoughts have been deleted!"});
+        await User.findOneAndUpdate(
+            { username: thought.username},
+            { $pull: { thoughts: thought._id} },
+            { runValidators: true, new: true }
+            );
+
+        res.json({message: "Thought has been deleted and associated user updated!"});
     } catch (err) {
         res.status(500).json(err)
         console.log("Error occured");

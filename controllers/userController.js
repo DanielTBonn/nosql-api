@@ -69,14 +69,10 @@ module.exports = {
             console.log(user)
 
             if (user.thoughts.length) {
-                console.log(user.thoughts)
-                console.log("There is something here")
                 for (let i = 0; i < user.thoughts.length; i++) {
                     await Thought.findOneAndDelete({ _id: user.thoughts[i]})
                     console.log(`Successfully deleted thought with id ${user.thoughts[i]}`)
                 }
-            } else {
-                console.log("Nothing here")
             }
 
             if(!user) {
